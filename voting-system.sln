@@ -1,0 +1,23 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{CF674B4E-0380-4483-A0BF-110C294FC222}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{3090C09C-9993-4E31-84CB-436A61898DEA}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "votingSystem.Api", "votingSystem.Api\votingSystem.Api.csproj", "{7FE17846-B0C4-4612-8BA2-E37705F29404}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{7FE17846-B0C4-4612-8BA2-E37705F29404} = {CF674B4E-0380-4483-A0BF-110C294FC222}
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7FE17846-B0C4-4612-8BA2-E37705F29404}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7FE17846-B0C4-4612-8BA2-E37705F29404}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7FE17846-B0C4-4612-8BA2-E37705F29404}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7FE17846-B0C4-4612-8BA2-E37705F29404}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
