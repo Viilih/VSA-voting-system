@@ -1,3 +1,6 @@
+using votingSystem.Api.Features.Votes.SubmitVote;
+using votingSystem.Api.Infrastructure.Messaging.RabbitMQ;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -6,6 +9,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
+builder.Services.AddScoped<SubmitVoteHandler>();
+builder.Services.AddScoped<IRabbitMqProducer, RabbitMqProducer>();
 
 var app = builder.Build();
 
