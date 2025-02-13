@@ -11,7 +11,7 @@ public class RabbitMqProducer : IRabbitMqProducer
         var factory = new ConnectionFactory { HostName = "localhost" };
         using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
-        channel.QueueDeclare("vote", exclusive: false);
+        channel.QueueDeclare("vote", durable: true,exclusive: false, autoDelete: false, arguments: null);
 
         var json = JsonConvert.SerializeObject(message);
         var body = Encoding.UTF8.GetBytes(json);

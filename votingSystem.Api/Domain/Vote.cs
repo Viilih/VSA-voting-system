@@ -12,6 +12,7 @@ public class Vote
 
     private Vote(int candidateId)
     {
+        Id = Guid.NewGuid();
         CandidateId = candidateId;
     }
 

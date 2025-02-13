@@ -6,6 +6,8 @@ public class Candidate
 {
     public int Id { get; private set; }
     public string Name { get; private set; }
+    
+    public List<Vote> Votes { get; private set; }
 
     private Candidate(string name)
     {
