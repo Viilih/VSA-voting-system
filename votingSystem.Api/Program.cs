@@ -1,4 +1,5 @@
 using Microsoft.EntityFrameworkCore;
+using votingSystem.Api.Features.Candidates;
 using votingSystem.Api.Features.Votes;
 using votingSystem.Api.Features.Votes.ProcessVote;
 using votingSystem.Api.Features.Votes.SubmitVote;
@@ -16,7 +17,8 @@ builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
-builder.Services.AddScoped<VoteRepository>();
+builder.Services.AddScoped<IVoteRepository,VoteRepository>();
+builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
 builder.Services.AddScoped<SubmitVoteHandler>();
 builder.Services.AddScoped<ProcessVoteHandler>();
 builder.Services.AddHostedService<RabbitMqConsumer>();

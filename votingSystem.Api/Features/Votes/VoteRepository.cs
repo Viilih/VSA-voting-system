@@ -4,7 +4,7 @@ using votingSystem.Api.Infrastructure.DbContext;
 
 namespace votingSystem.Api.Features.Votes;
 
-public class VoteRepository
+public class VoteRepository : IVoteRepository
 {
     private readonly VoteSystemDbContext _dbContext;
 

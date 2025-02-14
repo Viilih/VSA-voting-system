@@ -3,7 +3,7 @@ using votingSystem.Api.Infrastructure.DbContext;
 
 namespace votingSystem.Api.Features.Candidates;
 
-public class CandidateRepository
+public class CandidateRepository : ICandidateRepository
 {
     private readonly VoteSystemDbContext _dbContext;
 
@@ -14,7 +14,7 @@ public class CandidateRepository
 
     public async Task AddAsync(Candidate candidate)
     {
-        _dbContext.Candidates.AddAsync(candidate);
+        await _dbContext.Candidates.AddAsync(candidate);
         await _dbContext.SaveChangesAsync();
     }
 }
