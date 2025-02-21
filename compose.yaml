@@ -1,0 +1,32 @@
+﻿services:
+  sqlserver:
+    image: mcr.microsoft.com/mssql/server:2022-latest
+    environment:
+      - ACCEPT_EULA=Y
+      - MSSQL_SA_PASSWORD=@RandomPassword12345!
+    ports:
+      - "1433:1433"
+    volumes:
+      - sql-volume:/var/opt/mssql
+    networks:
+      - voting-network
+  rabbitmq:
+    image: rabbitmq:4-management
+    container_name: rabbitmq
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    networks:
+      - voting-network
+        
+        
+networks:
+  voting-network:
+    
+volumes:
+  rabbitmq_data:
+  sql-volume:
+    

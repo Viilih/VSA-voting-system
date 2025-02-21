@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace votingSystem.Api.Migrations
 {
     /// <inheritdoc />
-    public partial class InitialMigrationCreateDB : Migration
+    public partial class initialCreate : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -45,8 +45,7 @@ namespace votingSystem.Api.Migrations
             migrationBuilder.CreateIndex(
                 name: "IX_Votes_CandidateId",
                 table: "Votes",
-                column: "CandidateId",
-                unique: true);
+                column: "CandidateId");
         }
 
         /// <inheritdoc />

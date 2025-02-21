@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using votingSystem.Api.Features.Candidates;
+using votingSystem.Api.Features.Candidates.CreateCandidate;
 using votingSystem.Api.Features.Votes;
 using votingSystem.Api.Features.Votes.ProcessVote;
 using votingSystem.Api.Features.Votes.SubmitVote;
@@ -19,6 +20,7 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddScoped<IVoteRepository,VoteRepository>();
 builder.Services.AddScoped<ICandidateRepository, CandidateRepository>();
+builder.Services.AddScoped<CreateCanidadateHandler>();
 builder.Services.AddScoped<SubmitVoteHandler>();
 builder.Services.AddScoped<ProcessVoteHandler>();
 builder.Services.AddHostedService<RabbitMqConsumer>();
@@ -27,6 +29,12 @@ builder.Services.AddScoped<IRabbitMqProducer, RabbitMqProducer>();
 
 
 var app = builder.Build();
+
+using (var scope = app.Services.CreateScope())
+{
+    var context = scope.ServiceProvider.GetRequiredService<VoteSystemDbContext>();
+    context.Database.Migrate();
+}
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())

@@ -6,9 +6,9 @@ namespace votingSystem.Api.Features.Candidates.CreateCandidate;
 
 public class CreateCanidadateHandler
 {
-    private readonly CandidateRepository _candidateRepository;
+    private readonly ICandidateRepository _candidateRepository;
 
-    public CreateCanidadateHandler(CandidateRepository candidateRepository)
+    public CreateCanidadateHandler(ICandidateRepository candidateRepository)
     {
         _candidateRepository = candidateRepository;
     }

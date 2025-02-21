@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using votingSystem.Api.Domain;
 using votingSystem.Api.Infrastructure.DbContext;
 
@@ -16,5 +17,10 @@ public class CandidateRepository : ICandidateRepository
     {
         await _dbContext.Candidates.AddAsync(candidate);
         await _dbContext.SaveChangesAsync();
+    }
+    
+    public async Task<Candidate?> FindCandidateById(int candidateId)
+    {
+        return await _dbContext.Candidates.FirstOrDefaultAsync(v => v.Id == candidateId);
     }
 }

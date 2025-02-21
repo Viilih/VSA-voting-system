@@ -8,7 +8,7 @@ public class RabbitMqProducer : IRabbitMqProducer
 {
     public void SendMessage<T>(T message)
     {
-        var factory = new ConnectionFactory { HostName = "localhost" };
+        var factory = new ConnectionFactory { HostName = "localhost", UserName = "guest", Password = "guest", Port = 5672, VirtualHost = "/" };
         using var connection = factory.CreateConnection();
         using var channel = connection.CreateModel();
         channel.QueueDeclare("vote", durable: true,exclusive: false, autoDelete: false, arguments: null);

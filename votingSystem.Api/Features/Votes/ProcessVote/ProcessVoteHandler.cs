@@ -5,9 +5,9 @@ namespace votingSystem.Api.Features.Votes.ProcessVote;
 
 public class ProcessVoteHandler
 {
-    private readonly VoteRepository _voteRepository;
+    private readonly IVoteRepository _voteRepository;
 
-    public ProcessVoteHandler(VoteRepository voteRepository)
+    public ProcessVoteHandler(IVoteRepository voteRepository)
     {
         _voteRepository = voteRepository;
     }

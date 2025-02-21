@@ -19,6 +19,10 @@ public class SubmitVoteController : ControllerBase
     public async Task<IActionResult> SubmitVote([FromBody] SubmitVoteRequest request)
     {
         var result = await _handler.Handle(request);
+        if (result.IsFailed)
+        {
+            return BadRequest(result.Errors);
+        }
         return Ok(result);
     }
     

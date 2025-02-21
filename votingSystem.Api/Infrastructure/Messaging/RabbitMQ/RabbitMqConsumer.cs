@@ -19,49 +19,72 @@ public class RabbitMqConsumer : BackgroundService
         _serviceProvider = serviceProvider;
     }
 
-    protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+   protected override async Task ExecuteAsync(CancellationToken stoppingToken)
+{
+    _logger.LogInformation("Worker starting at: {time}", DateTimeOffset.Now);
+    
+    // Add retry logic
+    int retryCount = 0;
+    int maxRetries = 10;
+    TimeSpan delay = TimeSpan.FromSeconds(5);
+    
+    while (retryCount < maxRetries && !stoppingToken.IsCancellationRequested)
     {
-        _logger.LogInformation("Worker starting at: {time}", DateTimeOffset.Now);
-        
-        var factory = new ConnectionFactory()
+        try
         {
-            HostName = "localhost",
-            UserName = "guest",
-            Password = "guest",
-        };
-        
-        _connection = factory.CreateConnection();
-        _channel = _connection.CreateModel();
-        
-        _channel.QueueDeclare("vote", 
-            durable: true,
-            exclusive: false,
-            autoDelete: false,
-            arguments: null);
-        
-        var consumer = new EventingBasicConsumer(_channel);
-
-        consumer.Received += async (model, ea) =>
-        {
-            var body = ea.Body.ToArray();
-            var message = Encoding.UTF8.GetString(body);
-            _logger.LogInformation("Received: {Message}", message);
-            if (int.TryParse(message, out int candidateId))
+            var factory = new ConnectionFactory()
             {
-                await ProcessVote(candidateId);
-            }
-            _channel.BasicAck(ea.DeliveryTag, false);
-        };
+                HostName = "localhost",
+                UserName = "guest",
+                Password = "guest",
+                Port = 5672,
+            };
+            
+            _connection = factory.CreateConnection();
+            _channel = _connection.CreateModel();
+            
+            _channel.QueueDeclare("vote", 
+                durable: true,
+                exclusive: false,
+                autoDelete: false,
+                arguments: null);
+            
+            var consumer = new EventingBasicConsumer(_channel);
 
-        _channel.BasicConsume(queue: "vote", 
-            autoAck: false, 
-            consumer: consumer);
-        
-        while (!stoppingToken.IsCancellationRequested)
+            consumer.Received += async (model, ea) =>
+            {
+                var body = ea.Body.ToArray();
+                var message = Encoding.UTF8.GetString(body);
+                _logger.LogInformation("Received: {Message}", message);
+                if (int.TryParse(message, out int candidateId))
+                {
+                    await ProcessVote(candidateId);
+                }
+                _channel.BasicAck(ea.DeliveryTag, false);
+            };
+
+            _channel.BasicConsume(queue: "vote", 
+                autoAck: false, 
+                consumer: consumer);
+            
+            // Successfully connected - exit retry loop
+            _logger.LogInformation("Successfully connected to RabbitMQ");
+            break;
+        }
+        catch (Exception ex)
         {
-            await Task.Delay(1000, stoppingToken);
+            retryCount++;
+            _logger.LogWarning($"Failed to connect to RabbitMQ (Attempt {retryCount}/{maxRetries}): {ex.Message}");
+            await Task.Delay(delay, stoppingToken);
         }
     }
+    
+    // Keep the service running
+    while (!stoppingToken.IsCancellationRequested)
+    {
+        await Task.Delay(1000, stoppingToken);
+    }
+}
 
     private async Task ProcessVote(int candidateId)
     {

@@ -12,8 +12,8 @@ using votingSystem.Api.Infrastructure.DbContext;
 namespace votingSystem.Api.Migrations
 {
     [DbContext(typeof(VoteSystemDbContext))]
-    [Migration("20250213015531_FixVoteRelationship")]
-    partial class FixVoteRelationship
+    [Migration("20250218162846_initialCreate")]
+    partial class initialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
