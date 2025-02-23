@@ -21,11 +21,11 @@
       - rabbitmq_data:/var/lib/rabbitmq
     networks:
       - voting-network
-        
-        
+
+
 networks:
   voting-network:
-    
+
 volumes:
   rabbitmq_data:
   sql-volume:

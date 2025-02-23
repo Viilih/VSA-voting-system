@@ -30,6 +30,8 @@ builder.Services.AddScoped<IRabbitMqProducer, RabbitMqProducer>();
 
 var app = builder.Build();
 
+
+// We have this to automatically apply the migrations to the database
 using (var scope = app.Services.CreateScope())
 {
     var context = scope.ServiceProvider.GetRequiredService<VoteSystemDbContext>();
